@@ -40,5 +40,5 @@ Vcc = от 1.7V до 5.5V
  
  ```
  
-**[[Скачать]](https://github.com/Solderingironspb/Lessons-Stm32/archive/AT24Cxx.zip)**
+**[[Скачать]](https://github.com/Solderingironspb/AT24Cxx/archive/refs/heads/main.zip)**
 **[[Главная страница]](https://github.com/Solderingironspb/Lessons-Stm32/blob/master/README.md)**
