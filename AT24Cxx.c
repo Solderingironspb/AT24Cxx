@@ -13,7 +13,6 @@
  */
 
 #include "AT24Cxx.h"
-#include <stdio.h>
 
 uint8_t data_buff[AT24CXX_PAGE_BYTE];
 
