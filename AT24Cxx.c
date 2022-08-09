@@ -3,6 +3,7 @@
  *
  *  Библиотека для работы с микросхемой памяти EEPROM типа AT24Cxx
  *  Created on: Oct 29, 2021
+ *  Обновлено 09.08.2022(Решена проблема с ошибкой в вычислении CRC)
  *  Authors: Oleg Volkov & Konstantin Golinskiy
  *  YouTube: https://www.youtube.com/channel/UCzZKTNVpcMSALU57G1THoVw
  *  GitHub: https://github.com/Solderingironspb/Lessons-Stm32/blob/master/README.md
