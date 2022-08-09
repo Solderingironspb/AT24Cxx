@@ -3,6 +3,7 @@
  *
  *  Библиотека для работы с микросхемой памяти EEPROM типа AT24Cxx
  *  Created on: Oct 29, 2021
+ *  Обновлено 09.08.2022(Решена проблема с ошибкой в вычислении CRC)
  *  Authors: Oleg Volkov & Konstantin Golinskiy
  *  YouTube: https://www.youtube.com/channel/UCzZKTNVpcMSALU57G1THoVw
  *  GitHub: https://github.com/Solderingironspb/Lessons-Stm32/blob/master/README.md
@@ -132,7 +133,7 @@ bool AT24xx_Connect_test(void);
 void AT24Cxx_erase_chip(void);
 uint16_t AT24Cxx_write(uint16_t addMem_write, uint8_t *data_write, uint16_t size_write);
 uint16_t AT24Cxx_read(uint16_t addMem_read, uint8_t *data_read, uint16_t size_read);
-bool AT24Cxx_write_data(uint16_t addMem_write, uint8_t *data);
-bool AT24Cxx_read_data(uint16_t addMem_read, uint8_t *data);
+bool AT24Cxx_write_data(uint16_t addMem_write, uint8_t *data, uint8_t len);
+bool AT24Cxx_read_data(uint16_t addMem_read, uint8_t *data, uint8_t len);
 
 #endif	/*	_AT24CXX_H */
