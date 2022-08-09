@@ -159,7 +159,8 @@ bool AT24Cxx_write_data(uint16_t addMem_write, uint8_t *data) {
 	uint32_t CRC32 = 0;
 	uint32_t data_check = 0;
 	uint32_t CRC_check = 0;
-	CRC32 = HAL_CRC_Calculate(&AT24CXX_CRC, (uint32_t*) data, 1);
+	uint32_t import_data = *data;
+	CRC32 = HAL_CRC_Calculate(&AT24CXX_CRC, (uint32_t*) &import_data, 1);
 	AT24Cxx_write(addMem_write, (uint8_t*) data, 4); //Данные
 	AT24Cxx_write(addMem_write + 4, (uint8_t*) &CRC32, 4); //CRC32
 	AT24Cxx_read(addMem_write, (uint8_t*) &data_check, 4); //Данные
@@ -185,7 +186,8 @@ bool AT24Cxx_read_data(uint16_t addMem_read, uint8_t *data) {
 	uint32_t CRC_check = 0;
 	AT24Cxx_read(addMem_read, data, 4); //Данные
 	AT24Cxx_read(addMem_read + 4, (uint8_t*) &CRC_check, 4); //CRC32
-	if (HAL_CRC_Calculate(&AT24CXX_CRC, (uint32_t*) data, 1) == CRC_check) { //Если CRC принятых данных равна CRC, которые были записаны - значит данные не битые!
+	uint32_t import_data = *data;
+	if (HAL_CRC_Calculate(&AT24CXX_CRC, (uint32_t*) &import_data, 1) == CRC_check) { //Если CRC принятых данных равна CRC, которые были записаны - значит данные не битые!
 		return true;
 	} else {
 		return false;
