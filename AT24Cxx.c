@@ -13,6 +13,7 @@
  */
 
 #include "AT24Cxx.h"
+#include "stdio.h"
 
 uint8_t data_buff[AT24CXX_PAGE_BYTE];
 
@@ -177,12 +178,20 @@ bool AT24Cxx_write_data(uint16_t addMem_write, uint8_t *data, uint8_t len) {
 	uint32_t CRC32 = 0;
 	uint32_t data_check = 0;
 	uint32_t CRC_check = 0;
-	uint32_t import_data = *data;
+	uint32_t import_data = 0;
+	for (int i = 0; i < len; i++) {
+	*((uint8_t*)&import_data+i) = *(data+i);
+	}
+	
 	CRC32 = HAL_CRC_Calculate(&AT24CXX_CRC, (uint32_t*) &import_data, 1);
-	AT24Cxx_write(addMem_write, (uint8_t*) data, len); //Данные
+	AT24Cxx_write(addMem_write, (uint8_t*) data, 4); //Данные
 	AT24Cxx_write(addMem_write + 4, (uint8_t*) &CRC32, 4); //CRC32
-	AT24Cxx_read(addMem_write, (uint8_t*) &data_check, 4); //Данные
+	AT24Cxx_read(addMem_write, (uint8_t*) &data_check, len); //Данные
 	AT24Cxx_read(addMem_write + 4, (uint8_t*) &CRC_check, 4); //CRC32
+	/*printf("import_data = %lX\r\n", import_data);
+	printf("data_check = %lX\r\n", data_check);
+	printf("CRC32 = %lX\r\n", CRC32);
+	printf("CRC32_check = %lX\r\n", CRC_check);*/
 	if ((import_data == data_check) && (CRC32 == CRC_check)) {  //Если отправленные данные равны принятым, то прожиг прошел успешно!
 		return true;
 	} else {
@@ -205,7 +214,10 @@ bool AT24Cxx_read_data(uint16_t addMem_read, uint8_t *data, uint8_t len) {
 	uint32_t CRC_check = 0;
 	AT24Cxx_read(addMem_read, data, len); //Данные
 	AT24Cxx_read(addMem_read + 4, (uint8_t*) &CRC_check, 4); //CRC32
-	uint32_t import_data = *data;
+	uint32_t import_data = 0;
+	for (int i = 0; i < len; i++) {
+		*((uint8_t*)&import_data + i) = *(data + i);
+	}
 	if (HAL_CRC_Calculate(&AT24CXX_CRC, (uint32_t*) &import_data, 1) == CRC_check) {  //Если CRC принятых данных равна CRC, которые были записаны - значит данные не битые!
 		return true;
 	} else {
